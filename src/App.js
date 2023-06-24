@@ -1,5 +1,4 @@
-import { useMemo, useContext, useEffect } from 'react'
-import app from './lib/firebase.config'
+import { useMemo, useContext } from 'react'
 import { Context } from './context'
 import Card from './components/Card'
 import Layout from './components/Layout'
@@ -12,9 +11,7 @@ function App () {
       state.items.length > 1 ? 's' : ''
     }`
   }, [state.items])
-  useEffect(() => {
-    app()
-  }, [])
+
   return (
     <Layout>
       <h1 className='text-center'>Gallery</h1>
