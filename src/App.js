@@ -1,6 +1,6 @@
 import { useMemo, useContext, useEffect } from 'react'
 import { Context } from './context'
-import Firestore from './handlers/firestore'
+// import Firestore from './handlers/firestore'
 import Card from './components/Card'
 import Layout from './components/Layout'
 import './App.css'
