@@ -1,8 +1,10 @@
 import { useMemo, useContext } from 'react'
 import { Context } from '../context'
 import Firestore from '../handlers/firestore'
+import Storage from '../handlers/storage'
 
 const { writeDoc } = Firestore
+const { uploadFile, downloadFile } = Storage
 
 const Preview = () => {
   const { state } = useContext(Context)
@@ -31,9 +33,14 @@ const UploadForm = () => {
     dispatch({ type: 'setInputs', payload: { value: e } })
   const handleOnSubmit = e => {
     e.preventDefault()
-    writeDoc(inputs, 'stocks').then(console.log)
-    dispatch({ type: 'setItem' })
-    dispatch({ type: 'collapse', payload: { bool: false } })
+    uploadFile(state.inputs) // whatever we get passed as parameter to downloadFile
+      .then(downloadFile)
+      .then(url => {
+        writeDoc({ ...inputs, path: url }, 'stocks').then(() => {
+          dispatch({ type: 'setItem' })
+          dispatch({ type: 'collapse', payload: { bool: false } })
+        })
+      })
   }
   const isDisabled = useMemo(() => {
     return !!Object.values(inputs).some(input => !input) // check for new value
@@ -72,7 +79,7 @@ const UploadForm = () => {
               className='btn btn-success float-end'
               disabled={isDisabled} // pass memoized value to disable if form data missing
             >
-              Save changes
+              Save and Upload
             </button>
           </form>
         </div>
