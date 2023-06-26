@@ -88,7 +88,7 @@ function Dropdown () {
 
 function Navbar () {
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light mb-5'>
+    <nav className='navbar navbar-expand-lg navbar-light bg-light mb-5 p-2'>
       <div className='container-fluid'>
         <a className='navbar-brand' href='#'>
           ⚡ Firestock
@@ -106,8 +106,8 @@ function Navbar () {
         </button>
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <Navigation />
-          <SearchForm />
           <Dropdown />
+          <SearchForm />
         </div>
       </div>
     </nav>
