@@ -1,3 +1,27 @@
+import { useAuthContext } from '../context/AuthContext'
+
+const LogIn = () => {
+  const { login, currentUser } = useAuthContext()
+  return (
+    !currentUser && (
+      <button type='button' className='btn btn-warning' onClick={login}>
+        Login
+      </button>
+    )
+  )
+}
+
+const LogOut = () => {
+  const { logout, currentUser } = useAuthContext()
+  return (
+    !!currentUser && (
+      <button type='button' className='btn btn-danger' onClick={logout}>
+        Logout
+      </button>
+    )
+  )
+}
+
 function Navigation () {
   return (
     <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
@@ -48,7 +72,14 @@ function Dropdown () {
             <a className='dropdown-item text-center' href='#'>
               Profile
             </a>
+            <li>
+              <hr className='dropdown divider' />
+            </li>
           </li>
+          <div className='d-flex justify-content-center'>
+            <LogIn />
+            <LogOut />
+          </div>
         </ul>
       </li>
     </ul>
