@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App'
 import Layout from './components/Layout'
-import Stocks from './components/Stocks'
+import StockImages from './components/StockImages'
 import reportWebVitals from './reportWebVitals'
 // use Context Provider for single source of truth
 import Provider from './context/FirestoreContext'
@@ -19,7 +19,7 @@ root.render(
           <Layout>
             <Routes>
               <Route path='/' element={<App />} />
-              <Route path='/stocks' element={<Stocks />} />
+              <Route path='/stockimages' element={<StockImages />} />
             </Routes>
           </Layout>
         </Router>

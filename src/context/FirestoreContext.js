@@ -1,8 +1,8 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useContext, useReducer } from 'react'
 import Firestore from '../handlers/firestore'
 
 const { readDocs } = Firestore
-// keep logic and presentation separate using Context api 
+// keep logic and presentation separate using Context api
 export const Context = createContext()
 // Move all state management to Context
 const photos = []
@@ -37,7 +37,7 @@ function reducer (state, action) {
     case 'setItems':
       return {
         ...state,
-        items: action.payload.items,
+        items: action.payload.items
       }
     case 'setInputs':
       return {
@@ -68,4 +68,9 @@ const Provider = ({ children }) => {
     </Context.Provider>
   )
 }
+
+export const useFirestoreContext = () => {
+  return useContext(Context)
+}
+
 export default Provider
