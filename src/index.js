@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './index.css'
 import App from './App'
+import Layout from './components/Layout'
+import Stocks from './components/Stocks'
 import reportWebVitals from './reportWebVitals'
 // use Context Provider for single source of truth
 import Provider from './context/FirestoreContext'
 import AuthProvider from './context/AuthContext'
-
-function Stocks () {
-  return <h1>My Stock Images</h1>
-}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -18,16 +16,18 @@ root.render(
     <AuthProvider>
       <Provider>
         <Router>
-          <Routes>
-            <Route path='/' element={<App />} />
-            <Route path='/stocks' element={<Stocks />} />
-          </Routes>
+          <Layout>
+            <Routes>
+              <Route path='/' element={<App />} />
+              <Route path='/stocks' element={<Stocks />} />
+            </Routes>
+          </Layout>
         </Router>
       </Provider>
     </AuthProvider>
   </React.StrictMode>
 )
-// Note: each Route takes path (specifying path) and element 
+// Note: each Route takes path (specifying path) and element
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
