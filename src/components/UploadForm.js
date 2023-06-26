@@ -1,5 +1,6 @@
 import { useMemo, useContext } from 'react'
 import { Context } from '../context/FirestoreContext'
+import { useAuthContext } from '../context/AuthContext'
 import Firestore from '../handlers/firestore'
 import Storage from '../handlers/storage'
 
@@ -8,6 +9,7 @@ const { uploadFile, downloadFile } = Storage
 
 const Preview = () => {
   const { state } = useContext(Context)
+  const { currentUser } = useAuthContext()
   const {
     inputs: { path }
   } = state // destructuring the current state
@@ -28,15 +30,21 @@ const Preview = () => {
 // disable submit if any data missing from form
 const UploadForm = () => {
   const { dispatch, state } = useContext(Context) // allows to subscribe to context change
+  const { currentUser } = useAuthContext()
   const { isCollapsed: isVisible, inputs } = state // destructuring the current state
   const handleOnChange = e =>
     dispatch({ type: 'setInputs', payload: { value: e } })
+
+  const username = currentUser?.displayName.split(' ').join('')
   const handleOnSubmit = e => {
     e.preventDefault()
     uploadFile(state.inputs) // whatever we get passed as parameter to downloadFile
       .then(downloadFile)
       .then(url => {
-        writeDoc({ ...inputs, path: url }, 'stocks').then(() => {
+        writeDoc(
+          { ...inputs, path: url, user: username.toLowerCase() },
+          'stocks'
+        ).then(() => {
           dispatch({ type: 'setItem' })
           dispatch({ type: 'collapse', payload: { bool: false } })
         })
