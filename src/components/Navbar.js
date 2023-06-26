@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useAuthContext } from '../context/AuthContext'
 
 const LogIn = () => {
@@ -52,6 +53,25 @@ function SearchForm () {
 }
 
 function Dropdown () {
+  const { currentUser } = useAuthContext()
+  // display username or profile dynamically
+  const username = useMemo(() => {
+    return currentUser?.displayName || 'Profile'
+  }, [currentUser])
+  // update value of username and avatar based on currentUser state
+  const avatar = useMemo(() => {
+    return !!currentUser ? (
+      <img
+        className='avatar'
+        src={currentUser?.photoURL}
+        alt={currentUser?.displayName}
+        width='34'
+        height='34'
+      />
+    ) : (
+      'Login' // fallback for if no current user 
+    )
+  }, [currentUser])
   return (
     <ul className='navbar-nav mb-2 mb-lg-0'>
       {' '}
@@ -65,12 +85,12 @@ function Dropdown () {
           data-bs-toggle='dropdown'
           aria-expanded='false'
         >
-          Login
+          {avatar}
         </a>
         <ul className='dropdown-menu' aria-labelledby='navbarDropdown'>
           <li>
-            <a className='dropdown-item text-center' href='#'>
-              Profile
+            <a className='dropdown-item text-center text-capitalize' href='#'>
+              {username}
             </a>
             <li>
               <hr className='dropdown divider' />
@@ -88,7 +108,7 @@ function Dropdown () {
 
 function Navbar () {
   return (
-    <nav className='navbar navbar-expand-lg navbar-light bg-light mb-5 p-2'>
+    <nav className='navbar navbar-expand-lg navbar-light bg-light mb-5'>
       <div className='container-fluid'>
         <a className='navbar-brand' href='#'>
           ⚡ Firestock
@@ -106,8 +126,8 @@ function Navbar () {
         </button>
         <div className='collapse navbar-collapse' id='navbarSupportedContent'>
           <Navigation />
-          <Dropdown />
           <SearchForm />
+          <Dropdown />
         </div>
       </div>
     </nav>
