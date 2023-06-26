@@ -29,7 +29,7 @@ const Preview = () => {
 }
 // disable submit if any data missing from form
 const UploadForm = () => {
-  const { dispatch, state } = useContext(Context) // allows to subscribe to context change
+  const { dispatch, state, read } = useContext(Context) // allows to subscribe to context change
   const { currentUser } = useAuthContext()
   const { isCollapsed: isVisible, inputs } = state // destructuring the current state
   const handleOnChange = e =>
@@ -45,7 +45,7 @@ const UploadForm = () => {
           { ...inputs, path: url, user: username.toLowerCase() },
           'stocks'
         ).then(() => {
-          dispatch({ type: 'setItem' })
+          read()
           dispatch({ type: 'collapse', payload: { bool: false } })
         })
       })
