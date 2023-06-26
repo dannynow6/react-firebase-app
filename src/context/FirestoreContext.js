@@ -1,8 +1,8 @@
 import { createContext, useReducer } from 'react'
-import Firestore from './handlers/firestore'
+import Firestore from '../handlers/firestore'
 
 const { readDocs } = Firestore
-
+// keep logic and presentation separate using Context api 
 export const Context = createContext()
 // Move all state management to Context
 const photos = []

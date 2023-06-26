@@ -1,8 +1,8 @@
 import { signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth'
 import { auth } from '../lib/firebase.config'
 
-const provider = new GoogleAuthProvider()
-
+const provider = new GoogleAuthProvider() // create a new provider
+// create a new object for auth
 const FirebaseAuth = {
   signIn: () => {
     return new Promise(resolve => {
@@ -10,7 +10,7 @@ const FirebaseAuth = {
         .then(response => {
           resolve(response.user)
         })
-        .catch(console.error)
+        .catch(console.error) // console log error if any with network request
     })
   },
   signOut: () => {
@@ -21,3 +21,6 @@ const FirebaseAuth = {
 }
 
 export default FirebaseAuth
+
+// going to use context to handle user information
+// single source of truth to bypass props drilling
