@@ -69,7 +69,7 @@ function Dropdown () {
         height='34'
       />
     ) : (
-      'Login' // fallback for if no current user 
+      'Login' // fallback for if no current user
     )
   }, [currentUser])
   return (
