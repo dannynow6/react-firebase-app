@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter as Router } from 'react-router-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
@@ -12,7 +13,9 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <Provider>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </Provider>
     </AuthProvider>
   </React.StrictMode>
