@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 
-function Card ({ path, title, createdAt }) {
+function Card ({ path, title, createdAt, user }) {
   const timestamp = useMemo(() => {
     // split used on string obj
-    const date = `${new Date(createdAt.seconds * 1000)}`.split(" ")
+    const date = `${new Date(createdAt.seconds * 1000)}`.split(' ')
     return `${date[1]} ${date[2]} ${date[3]}`
   }, [])
   return (
@@ -17,10 +17,12 @@ function Card ({ path, title, createdAt }) {
             backgroundRepeat: 'no-repeat'
           }}
         ></div>
-        <h5 className='text-center mt-2 text-secondary text-capitalize'>{title}</h5>
+        <h5 className='text-center mt-2 text-secondary text-capitalize'>
+          {title}
+        </h5>
         <div className='d-flex justify-content-around py-2 text-secondary'>
           <p>{timestamp}</p>
-          <i>@username</i>
+          <i>{`@${user}`}</i>
         </div>
       </div>
     </div>
