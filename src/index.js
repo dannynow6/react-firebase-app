@@ -8,7 +8,17 @@ import StockImages from './components/StockImages'
 import reportWebVitals from './reportWebVitals'
 // use Context Provider for single source of truth
 import Provider from './context/FirestoreContext'
-import AuthProvider from './context/AuthContext'
+import AuthProvider, { useAuthContext } from './context/AuthContext'
+
+function AppRoutes () {
+  const { currentUser } = useAuthContext()
+  return (
+    <Routes>
+      <Route path='/' element={<App />} />
+      {currentUser && <Route path='/stockimages' element={<StockImages />} />}
+    </Routes>
+  )
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
@@ -17,10 +27,7 @@ root.render(
       <Provider>
         <Router>
           <Layout>
-            <Routes>
-              <Route path='/' element={<App />} />
-              <Route path='/stockimages' element={<StockImages />} />
-            </Routes>
+            <AppRoutes />
           </Layout>
         </Router>
       </Provider>

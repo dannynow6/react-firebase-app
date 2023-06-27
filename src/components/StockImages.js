@@ -16,7 +16,7 @@ const StockImages = () => {
   }, [state.items, currentUser]) // returns updated list of images tied to currentUser
   return (
     <>
-      <h1>My Stock Images</h1>
+      <h1 className="display-4 mb-5 text-center text-secondary">My Stock Images</h1>
       <List items={items} />
     </>
   )
