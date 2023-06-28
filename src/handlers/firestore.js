@@ -16,7 +16,7 @@ const Firestore = {
       try {
         const snapshots = await getDocs(ref) // pass ref to db as parameter in getDocs
         snapshots.forEach(doc => {
-          const d = { ...doc.data() }
+          const d = { ...doc.data(), id: doc.id }
           docs.push(d) // push data from firebase to array
         })
         resolve(docs)
