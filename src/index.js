@@ -6,6 +6,8 @@ import App from './App'
 import Layout from './components/Layout'
 import StockImages from './components/StockImages'
 import Single from './components/Single'
+import NotFound from './components/NotFound'
+import Profile from './components/Profile'
 import reportWebVitals from './reportWebVitals'
 // use Context Provider for single source of truth
 import Provider from './context/FirestoreContext'
@@ -18,6 +20,8 @@ function AppRoutes () {
     <Routes>
       <Route path='/' element={<App />} />
       <Route path='/images/:id' element={<Single />} />
+      <Route path='*' element={<NotFound />} /> {/* use wildcard in path */}
+      <Route path='/profile' element={<Profile />} />
       {currentUser && <Route path='/stockimages' element={<StockImages />} />}
     </Routes>
   )

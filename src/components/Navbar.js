@@ -36,7 +36,7 @@ function Navigation () {
         </Link>
       </li>
       <li className='nav-item'>
-        {currentUser && ( // displays link only if user logged in 
+        {currentUser && ( // displays link only if user logged in
           <Link
             className='nav-link active'
             aria-current='page'
@@ -102,14 +102,16 @@ function Dropdown () {
           {avatar}
         </a>
         <ul className='dropdown-menu' aria-labelledby='navbarDropdown'>
-          <li>
-            <a className='dropdown-item text-center text-capitalize' href='#'>
-              {username}
-            </a>
+          {currentUser && (
             <li>
-              <hr className='dropdown divider' />
+              <a className='dropdown-item text-center text-capitalize' href='#'>
+                <Link to='/profile'>{username}</Link>
+              </a>
+              <li>
+                <hr className='dropdown divider' />
+              </li>
             </li>
-          </li>
+          )}
           <div className='d-flex justify-content-center'>
             <LogIn />
             <LogOut />
