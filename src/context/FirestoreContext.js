@@ -31,13 +31,21 @@ function reducer (state, action) {
       return {
         ...state,
         items: [state.inputs, ...state.items],
+        // keep track of original list of data 
+        placeholders: [state.inputs, ...state.items],
         count: state.items.length + 1,
         inputs: { title: null, file: null, path: null }
+      }
+    case 'filterItems':
+      return {
+        ...state,
+        items: action.payload.results
       }
     case 'setItems':
       return {
         ...state,
-        items: action.payload.items
+        items: action.payload.items,
+        placeholders: action.payload.items
       }
     case 'setInputs':
       return {
@@ -61,6 +69,19 @@ const Provider = ({ children }) => {
   const read = async () => {
     const items = await readDocs('stocks')
     dispatch({ type: 'setItems', payload: { items } })
+  }
+  const filterItems = input => {
+    if (input === '' || !!input) {
+      // go back to original list if input is null / search inactive 
+      dispatch({ type: 'setItems', payload: { items: state.placeholders } })
+    }
+    let list = state.placeholders.flat()
+    let results = list.filter(item => {
+      const name = item.title.toLowerCase()
+      const searchInput = input.toLowerCase()
+      return name.indexOf(searchInput) > -1
+    })
+    dispatch({ type: 'filterItems', payload: { results } })
   }
   return (
     <Context.Provider value={{ state, dispatch, read }}>
