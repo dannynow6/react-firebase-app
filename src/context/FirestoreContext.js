@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useContext, useMemo, useReducer } from 'react'
 import Firestore from '../handlers/firestore'
 
 const { readDocs } = Firestore
@@ -31,7 +31,7 @@ function reducer (state, action) {
       return {
         ...state,
         items: [state.inputs, ...state.items],
-        // keep track of original list of data 
+        // keep track of original list of data
         placeholders: [state.inputs, ...state.items],
         count: state.items.length + 1,
         inputs: { title: null, file: null, path: null }
@@ -72,7 +72,6 @@ const Provider = ({ children }) => {
   }
   const filterItems = input => {
     if (input === '' || !!input) {
-      // go back to original list if input is null / search inactive 
       dispatch({ type: 'setItems', payload: { items: state.placeholders } })
     }
     let list = state.placeholders.flat()
@@ -83,11 +82,16 @@ const Provider = ({ children }) => {
     })
     dispatch({ type: 'filterItems', payload: { results } })
   }
-  return (
-    <Context.Provider value={{ state, dispatch, read }}>
-      {children}
-    </Context.Provider>
-  )
+
+  const value = useMemo(() => {
+    return {
+      state,
+      dispatch,
+      read,
+      filterItems
+    }
+  }, [state, dispatch, read, filterItems])
+  return <Context.Provider value={value}>{children}</Context.Provider>
 }
 
 export const useFirestoreContext = () => {
