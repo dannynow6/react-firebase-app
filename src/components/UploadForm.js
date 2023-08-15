@@ -2,7 +2,7 @@ import { useMemo, useContext } from 'react'
 import { Context } from '../context/FirestoreContext'
 import { useAuthContext } from '../context/AuthContext'
 import Firestore from '../handlers/firestore'
-import Storage from '../handlers/storage'
+import Storage from '../handlers/storage' 
 
 const { writeDoc } = Firestore
 const { uploadFile, downloadFile } = Storage
